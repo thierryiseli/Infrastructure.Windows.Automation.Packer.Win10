@@ -29,6 +29,8 @@ cinst virtualbox -y
 
 If you have not installed chocolatey, please refer to https://chocolatey.org/install. 
 
+**Restart your computer!**
+
 ## Running (on Windows)
 
 Open Command Prompt as administrator and switch to the location of the cloned or copied repository:
