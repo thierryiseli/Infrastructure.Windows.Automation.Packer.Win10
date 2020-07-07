@@ -17,11 +17,16 @@ Download Windows ISO-File with following link: https://docs.google.com/uc?export
 
 ### Installing
 
-Install packer with Chocolatey on Command Prompt or PowerShell:
+Install Packer and Virtual Box with Chocolatey on Command Prompt or PowerShell:
 
 ```
 cinst packer -y
 ```
+
+```
+cinst virtualbox -y
+```
+
 If you have not installed chocolatey, please refer to https://chocolatey.org/install. 
 
 ## Running (on Windows)
