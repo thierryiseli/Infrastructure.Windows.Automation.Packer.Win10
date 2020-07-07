@@ -1,0 +1,86 @@
+{
+  "builders": [
+    {
+      "communicator": "winrm",
+      "floppy_files": [
+        "answer_files/Autounattend.xml",
+        "./scripts/bootstrap.ps1",
+        "./scripts/oracle.cer",
+        "./scripts/unattend.xml"
+      ],
+      "guest_additions_mode": "disable",
+      "guest_os_type": "Windows10_64",
+      "headless": true,
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+      "iso_url": "{{ user `iso_url` }}",
+      "output_directory": "./output-win10-base/",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "15m",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--natpf1",
+          "guest_winrm,tcp,,55985,,5985"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--vram",
+          "128"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "vm_name": "win10-base",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "8h",
+      "winrm_username": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "elevated_password": "vagrant",
+      "elevated_user": "vagrant",
+      "script": "./scripts/windows-base.ps1",
+      "type": "powershell"
+    },
+	{
+      "elevated_password": "vagrant",
+      "elevated_user": "vagrant",
+      "script": "./scripts/tools_and_stuff.ps1",
+      "type": "powershell"
+    },
+	{
+      "elevated_password": "vagrant",
+      "elevated_user": "vagrant",
+      "script": "./scripts/configure-ansible.ps1",
+      "type": "powershell"
+    }
+  ],
+  "variables": {
+    "autounattend": "./answer_files/Autounattend.xml",
+    "iso_checksum": "3cf9848ce17271e7c895366bdad98a8e",
+    "iso_checksum_type": "md5",
+    "iso_url": "Win10_2004_English_x64.iso"
+  },
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows10.box",
+      "vagrantfile_template": "./templates/vagrantfile-windows_10.template"
+    }
+  ]
+}
