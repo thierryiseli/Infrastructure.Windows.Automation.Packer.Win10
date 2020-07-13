@@ -49,7 +49,7 @@ Wait until command has finished. This may take a few minutes. After that a windo
 
 ## Authors
 
-- [Thierry Iseli](https://github.com/thierryiseli) - *Inital work*
+- [Thierry Iseli](https://github.com/thierryiseli) - *Initial work*
 
 ## License
 
